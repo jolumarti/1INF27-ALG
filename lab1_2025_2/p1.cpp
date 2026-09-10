@@ -70,7 +70,7 @@ void p1() {
             continue; // Ask for input again
         }
         searchCombinations(data, dataSize, P, B, F);
-        cout << "¿Desea ingresar otro conjunto de valores? (S/N): ";
+        cout << "¿Desea ingresar otro conjunto de valores? (s/n): ";
         char choice;
         cin >> choice;
         if (choice != 's' && choice != 'S') {
