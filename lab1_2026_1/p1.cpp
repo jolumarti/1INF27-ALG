@@ -24,7 +24,7 @@ int findArtefacts(int minX, int maxX, int y, int alcance, int direccion, char ma
             mapa[y][i]='*';
         }
     }
-    if (direccion==0) { // Caso inical se va hacia arriba y abajo
+    if (direccion==0) { // Caso inicial se va hacia arriba y abajo
         count +=findArtefacts(minX-1, maxX+1, y-1, alcance-1, -1, mapa);
         count +=findArtefacts(minX-1, maxX+1, y+1, alcance-1, 1, mapa);
         return count;
@@ -42,6 +42,6 @@ void p1() {
     mapa[7][5]='A';
     printMap(mapa);
     int count = findArtefacts(x, x, y, alcance, direccion, mapa);
-    cout << "Artefacts found: " << count << endl;
+    cout << "Artefactos encontrados: " << count << endl;
     printMap(mapa);
 }

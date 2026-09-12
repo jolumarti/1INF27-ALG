@@ -5,17 +5,14 @@
 #include "p2.hpp"
 #define NUM_TEETH 8
 #define NUM_TYPE_TEETH 4
-#define NUM_DATE 3
-
+#define NUM_DATE 4
+// Se usa numero de citas a 4 (0 caso que no vaya a ninguna cita)
 void loadCromo(int numOptions,int base, int n,int *cromo) {
-    int res,i=0;
-    for (int j=0;j<n;j++)cromo[j]=0;
-    while (numOptions>0) {
-        res=numOptions%base;
-        numOptions=numOptions/base;
-        cromo[i]=res;
-        i++;
+    for (int j=0;j<n;j++) {
+        cromo[j]=numOptions%base;
+        numOptions/=base;
     }
+
 }
 
 void bruteForce(int teeth[NUM_TEETH][4], int teethType[NUM_TYPE_TEETH][3], int dateInfo[NUM_DATE][2]) {
@@ -39,8 +36,8 @@ void bruteForce(int teeth[NUM_TEETH][4], int teethType[NUM_TYPE_TEETH][3], int d
         }
         bool isValid=true;
         int total{0};
-        for (int j = 0; j < NUM_DATE; j++) {// valida que la duracion de cada cita no exceda el tiempo disponible
-            if (subDuration[j]>dateInfo[j][1]) {
+        for (int j = 1; j < NUM_DATE; j++) {// valida que la duracion de cada cita no exceda el tiempo disponible
+            if (subDuration[j]>dateInfo[j-1][1]) {
                 isValid=false;
                 break;
             }
@@ -50,7 +47,7 @@ void bruteForce(int teeth[NUM_TEETH][4], int teethType[NUM_TYPE_TEETH][3], int d
             maxTotal=total;
         }
     }
-    cout << "MAX TOTAL IS " << maxTotal << endl;
+    cout << "El total maximo es " << maxTotal << endl;
 }
 
 
