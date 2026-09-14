@@ -4,19 +4,15 @@
 using namespace std;
 
 int findMaxGanancia(int dataProyectos[][P_CAT], int N, int P, int x) {
-    if (x >= N || P <= 0) return 0;
+    if (x >= N) return 0;
     int costo = dataProyectos[x][0];
     int ganancia = dataProyectos[x][1];
-    // se cacula la siguiente ganancia sin usar este proyecto
-    int sigGananciaProy = findMaxGanancia(dataProyectos, N, P, x + 1);
-    int gananciaProy = 0;
+    // se calcula la siguiente ganancia sin usar este proyecto
+    int excluirProy = findMaxGanancia(dataProyectos, N, P, x + 1);
+    int incluirProy = 0;
     // se evalua si el proyecto esta dentro del costo para sumar o continuar
-    if (costo <= P) gananciaProy = findMaxGanancia(dataProyectos, N, P - costo, x + 1) + ganancia;
-    //return max(gananciaProy, sigGananciaProy);
-    if (sigGananciaProy < gananciaProy) {
-        return gananciaProy;
-    }
-    return sigGananciaProy;
+    if (costo <= P) incluirProy = findMaxGanancia(dataProyectos, N, P - costo, x + 1) + ganancia;
+    return max(incluirProy, excluirProy);
 }
 
 void printMax(int dataProyectos[][2], int N, int P) {
