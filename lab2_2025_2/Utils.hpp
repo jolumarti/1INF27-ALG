@@ -10,5 +10,7 @@
 #include <cstring>
 #include <climits>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 #endif //UTILS_HPP
