@@ -3,4 +3,6 @@ project(lab2_2025_2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(lab2_2025_2 main.cpp)
+add_executable(lab2_2025_2 main.cpp
+p1.cpp
+p2.cpp)

@@ -1,38 +1,127 @@
 #include "p2.hpp"
+
+#include <iostream>
+#include <climits>
+
+using namespace std;
+
 #define NOT_FOUND -1
-#define M 10
 
-int find_ancestor(int data[M][M], int cur, int opo) {
-    if (opo == M) {
-        bool is_valid = true;
-        for (int i = 0; i < M; i++) {
-            if (i != cur) {
-                //cout << i << " " << data[i][cur]<< " " << data[cur][i] << endl;
-                if (data[i][cur]==0 || data[cur][i]>0) {
-                    is_valid = false;
-                    break;
-                }
-            }
-        }
-        if (is_valid) return cur;
-        return NOT_FOUND;
-    }
-    if (data[cur][opo]==0) return find_ancestor(data, cur, opo+1);
-    return find_ancestor(data, opo, opo+1);
+struct Node {
+    int value;
+    Node *next;
+};
+
+void push(Node *&head, Node *node) {
+    if (node == nullptr)
+        return;
+
+    node->next = head;
+    head = node;
 }
-void p2() {
-    int data[M][M]{
-        {100, 0, 50, 40, 30, 20, 30, 0, 80, 0},
-        {50, 100, 0, 40, 30, 20, 20, 0, 10, 25},
-        {80, 30, 100, 40, 30, 0, 30, 20, 10, 60},
-        {50, 0, 0, 100, 30, 0, 50, 30, 30, 90},
-        {50, 10, 10, 10, 100, 0, 10, 50, 10, 50},
-        {20, 0, 0, 0, 0, 100, 90, 20, 40, 20},
-        {0, 0, 0, 0, 0, 0, 100, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 50, 100, 50, 20},
-        {20, 0, 0, 40, 0, 0, 90, 0, 100, 10},
-        {0, 10, 0, 0, 0, 0, 10, 0, 60, 100}
-    };
-    cout << find_ancestor(data, 0, 1);
 
+Node *pop(Node *&head) {
+    if (head == nullptr)
+        return nullptr;
+
+    Node *temp = head;
+    head = head->next;
+    temp->next = nullptr;
+
+    return temp;
+}
+
+void insert_value(Node *&head, int value) {
+    Node *node = new Node;
+    node->value = value;
+    node->next = nullptr;
+
+    push(head, node);
+}
+
+void print_stack(Node *head) {
+    while (head != nullptr) {
+        cout << head->value << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+void print_stacks(Node *stacks[]) {
+    cout << "STACK 1: ";
+    print_stack(stacks[0]);
+    cout << "STACK 2: ";
+    print_stack(stacks[1]);
+    cout << "STACK 3: ";
+    print_stack(stacks[2]);
+    cout << endl;
+}
+
+void hanoi(Node *stacks[], int limit, int dest_id) {
+    int max_value = INT_MIN;
+    int max_id = NOT_FOUND;
+
+    // encontrar el paq mas grande
+    for (int i = 0; i < 3; i++) {
+        Node *current = stacks[i];
+
+        while (current) {
+            if (current->value < limit &&
+                current->value > max_value) {
+                max_value = current->value;
+                max_id = i;
+            }
+            current = current->next;
+        }
+    }
+
+    // no hay paq mas grande
+    if (max_id == NOT_FOUND) return;
+
+    // el paq ya esta en destino, ahora buscar el siguiente paq
+    if (max_id == dest_id) {
+        hanoi(stacks, max_value, dest_id);
+        return;
+    }
+
+    // encontrar la pila aux, se puede hacer con for
+    int aux_id = 3 - max_id - dest_id;
+
+    // mover otros discos al aux
+    hanoi(stacks, max_value, aux_id);
+
+    print_stacks(stacks);
+
+    // ahora el paq mayor estar arriba y mover al destino
+    push(stacks[dest_id], pop(stacks[max_id]));
+
+    print_stacks(stacks);
+
+    // mover otros paq al destino
+    hanoi(stacks, max_value, dest_id);
+    print_stacks(stacks);
+
+}
+
+void p2() {
+    Node *stacks[3] = {nullptr, nullptr, nullptr};
+
+    // Stack 1:
+    insert_value(stacks[0], 20);
+    insert_value(stacks[0], 15);
+    insert_value(stacks[0], 5);
+
+    // Stack 2:
+    insert_value(stacks[1], 18);
+    insert_value(stacks[1], 12);
+    insert_value(stacks[1], 10);
+    insert_value(stacks[1], 2);
+
+    cout << "INITIAL STATE\n";
+    print_stacks(stacks);
+
+    hanoi(stacks, INT_MAX, 2);
+
+    cout << "FINAL STATE\n";
+    print_stacks(stacks);
 }
