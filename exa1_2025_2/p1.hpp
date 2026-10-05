@@ -4,6 +4,6 @@
 
 #ifndef EXA1_2025_2_P1_HPP
 #define EXA1_2025_2_P1_HPP
-#include "Utils.hpp"
+#include "utils.hpp"
 void p1();
 #endif //EXA1_2025_2_P1_HPP
