@@ -4,7 +4,7 @@
 
 #ifndef LISTASIMPLEMENTEENLAZADA_INGREDIENTE_H
 #define LISTASIMPLEMENTEENLAZADA_INGREDIENTE_H
-struct Ingrediente {
+struct Inventory {
     char nombre[30];
     int codigo;
     int cantidad;

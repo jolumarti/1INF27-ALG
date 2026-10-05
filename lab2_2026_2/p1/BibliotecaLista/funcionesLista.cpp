@@ -120,6 +120,6 @@ void imprimir(const struct Lista & listaTAD) {
             cout << recorrido->elemento.codigo << " - "  << recorrido->elemento.nombre << endl ;
             recorrido = recorrido->siguiente;
         }
-        cout << "]" << endl;
+        cout << endl;
     }
 }

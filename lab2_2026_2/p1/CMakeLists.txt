@@ -9,4 +9,4 @@ add_executable(ListaSimplementeEnlazada main.cpp
         BibliotecaLista/funcionesLista.h
         BibliotecaLista/ElementoLista.h
         BibliotecaLista/NodoLista.h
-        BibliotecaLista/Ingrediente.h)
+        BibliotecaLista/Inventory.h)
