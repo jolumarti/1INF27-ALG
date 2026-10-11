@@ -12,4 +12,6 @@ add_executable(exa1_2025_2 main.cpp
         p3.cpp
         p3.hpp
         p4.cpp
-        p4.hpp)
+        p4.hpp
+        p5.cpp
+        p5.hpp)
